@@ -4,6 +4,7 @@ import random
 
 from copy import deepcopy
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Dict, List, Set
 
 
@@ -50,7 +51,7 @@ class BingoSheetGenerator:
         return sheet
 
     @staticmethod
-    def draw_table(sheet: List[str], config: Config, export_path: str) -> None:
+    def draw_table(sheet: List[str], config: Config, export_path: Path, header: str) -> None:
 
         sheet_size = config.sheet_size
         data = [sheet[i * sheet_size:i * sheet_size + sheet_size] for i in range(sheet_size)]
@@ -65,15 +66,12 @@ class BingoSheetGenerator:
                                         font_color="black",
                                         font_family="Times New Roman",
                                         font_size=16,
-                                        text=f"Participant name: {config.participant}",
+                                        text=f"{header} ---- Participant name: {config.participant}",
                                     ),
                                     tbl_header=dict(
                                         align="center",
                                         line_color="black",
                                     ),
-                                    tbl_cells=dict(
-                                        align="center",
-                                        line_color="black",
-                                    ))
+                                    tbl_cells=dict(align="center", line_color="black", height=50))
 
-        df2img.save_dataframe(fig=fig, filename=export_path)
+        df2img.save_dataframe(fig=fig, filename=str(export_path))
