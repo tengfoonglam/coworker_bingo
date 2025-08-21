@@ -5,5 +5,6 @@ pillowdrawtable
 PyQt5
 PySide2
 df2img
+progress
 
 pre-commit

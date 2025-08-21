@@ -1,5 +1,6 @@
 import config as cfg
 import pandas as pd
+from progress.bar import Bar
 
 from coworker_bingo import BingoSheetGenerator, SheetDrawer
 
@@ -51,6 +52,9 @@ def main() -> None:
 
     print(f"{len(specific_facts)} participants provided at least one specific facts.")
 
+    total_number_sheets = len(participants_list) * cfg.NUMBER_PUZZLE_SETS
+    progress_bar = Bar("Generating Bingo Sheets", max=total_number_sheets)
+
     for i in range(1, cfg.NUMBER_PUZZLE_SETS + 1):
         for participant in participants_list:
             bingo_sheet_config = BingoSheetGenerator.Config(sheet_size=cfg.SHEET_SIZE,
@@ -60,12 +64,15 @@ def main() -> None:
                                                             specific_facts=specific_facts,
                                                             specific_fact_indexes=cfg.SPECIFIC_FACT_INDEXES)
             sheet = BingoSheetGenerator.generate(config=bingo_sheet_config)
-            label = f"bingo_sheet_{participant}_{cfg.SHEET_SIZE}x{cfg.SHEET_SIZE}_{i}"
-            header = f"{label} ---- Participant name: {bingo_sheet_config.participant}"
+            stem = f"bingo_sheet_{participant}_{cfg.SHEET_SIZE}x{cfg.SHEET_SIZE}_{i}"
+            header = f"{stem} ---- Participant name: {bingo_sheet_config.participant}"
             SheetDrawer.draw_table(sheet=sheet,
                                    config=cfg.SHEET_DRAWER_CONFIG,
-                                   export_path=cfg.OUTPUT_DATA_PATH / f"{label}.{cfg.OUTPUT_EXTENSION}",
+                                   export_path=cfg.OUTPUT_DATA_PATH / f"{stem}.{cfg.OUTPUT_EXTENSION}",
                                    header=header)
+            progress_bar.next()
+
+    print(f"\nSheet generation complete, output files can be found in {cfg.OUTPUT_DATA_PATH}")
 
 
 if __name__ == "__main__":
