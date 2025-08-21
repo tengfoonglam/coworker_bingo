@@ -1,5 +1,7 @@
 import df2img
+import os
 import pandas as pd
+import sys
 
 from dataclasses import dataclass
 from pathlib import Path
@@ -18,6 +20,9 @@ class SheetDrawer:
 
     @staticmethod
     def draw_table(sheet: pd.DataFrame, config: Config, export_path: Path, header: str) -> None:
+
+        # Disable prints because the drawing of the sheet has a lot of verbose
+        sys.stdout = open(os.devnull, 'w')
 
         fig = df2img.plot_dataframe(sheet,
                                     print_index=False,
@@ -40,3 +45,6 @@ class SheetDrawer:
                                     fig_size=config.fig_size)
 
         df2img.save_dataframe(fig=fig, filename=str(export_path))
+
+        # Revert standard output back to normal
+        sys.stdout = sys.__stdout__
