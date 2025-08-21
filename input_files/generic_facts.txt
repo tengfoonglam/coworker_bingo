@@ -1,70 +1,40 @@
-GenericFact1
-GenericFact2
-GenericFact3
-GenericFact4
-GenericFact5
-GenericFact6
-GenericFact7
-GenericFact8
-GenericFact9
-GenericFact10
-GenericFact11
-GenericFact12
-GenericFact13
-GenericFact14
-GenericFact15
-GenericFact16
-GenericFact17
-GenericFact18
-GenericFact19
-GenericFact20
-GenericFact21
-GenericFact22
-GenericFact23
-GenericFact24
-GenericFact25
-GenericFact26
-GenericFact27
-GenericFact28
-GenericFact29
-GenericFact30
-GenericFact41
-GenericFact42
-GenericFact43
-GenericFact44
-GenericFact45
-GenericFact46
-GenericFact47
-GenericFact48
-GenericFact49
-GenericFact50
-GenericFact51
-GenericFact52
-GenericFact53
-GenericFact54
-GenericFact55
-GenericFact56
-GenericFact57
-GenericFact58
-GenericFact59
-GenericFact60
-GenericFact61
-GenericFact62
-GenericFact63
-GenericFact64
-GenericFact65
-GenericFact66
-GenericFact67
-GenericFact68
-GenericFact69
-GenericFact70
-GenericFact71
-GenericFact72
-GenericFact73
-GenericFact74
-GenericFact75
-GenericFact76
-GenericFact77
-GenericFact78
-GenericFact79
-GenericFact80
+Arrives at work before 8:30am
+Has a mechanical keyboard at his/her desk
+Has a gaming mouse at his/her desk
+Has a family photo at his/her desk
+Has a plant at his/her desk
+Drinks a cup of coffee in the morning
+Has a small snack in the afternoon regularly
+Brings lunch from home
+Is a single child
+Is left handed
+Has only one child
+Has more than 2 children
+Is married for more than 10 years
+Only been with the company for less than a year
+Has been in the company 1-5 years
+Has worked at the company for more than 5 years
+Listens to instrumental music at work
+Knows how to play 2 musical instruments
+Owns a pet
+Owns more than one pet
+Studied overseas
+Has travelled to more than 4 continents
+Knows how to cook
+Has a driving license
+Has a master's degree
+Has a PhD
+Owns a 3D printer
+Wears a ring that is not a wedding ring
+Has a piercing
+Used to wear braces
+Wears contact lenses
+Has perfect vision
+Never flown on a plane
+Does not know how to ride a bike
+Can juggle
+Drinks tea during lunch
+Went on an overseas exchange during their Bachelors degree
+Has a fear of heights
+Has worked overseas
+Exercises at least twice a week

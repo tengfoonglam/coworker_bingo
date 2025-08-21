@@ -38,7 +38,7 @@ class BingoSheetGenerator:
         specific_names = list(specific_facts_no_pariticipant.keys())
         sampled_specific_names = random.sample(specific_names, num_specific_fact_grids)
         random.shuffle(sampled_specific_names)
-        sampled_facts = [random.sample(specific_facts_no_pariticipant[name], 1) for name in sampled_specific_names]
+        sampled_facts = [random.sample(specific_facts_no_pariticipant[name], 1)[0] for name in sampled_specific_names]
 
         # Create sheet
         sheet = ["" for _ in range(num_grids)]
