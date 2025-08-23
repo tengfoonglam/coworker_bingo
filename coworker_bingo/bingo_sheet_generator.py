@@ -65,7 +65,9 @@ class BingoSheetGenerator:
         return True
 
     @staticmethod
-    def generate(participant_name: str, config: Config, data: Data) -> pd.DataFrame:
+    def generate(
+        participant_name: str, config: Config, data: Data
+    ) -> pd.DataFrame:
         num_cells = config.num_cells
         num_specific_fact_cells = len(config.specific_fact_indexes)
         num_generic_fact_cells = num_cells - num_specific_fact_cells
@@ -75,7 +77,9 @@ class BingoSheetGenerator:
             set([i for i in range(num_cells)]) - config.specific_fact_indexes
         )
         assert num_generic_fact_cells == len(generic_fact_indexes)
-        generic_facts = random.sample(data.generic_facts, num_generic_fact_cells)
+        generic_facts = random.sample(
+            data.generic_facts, num_generic_fact_cells
+        )
         random.shuffle(generic_facts)
 
         # Pick specific facts (excluding the participant's own facts)
@@ -83,7 +87,9 @@ class BingoSheetGenerator:
         if participant_name in specific_facts_no_participant:
             del specific_facts_no_participant[participant_name]
         specific_names = list(specific_facts_no_participant.keys())
-        sampled_specific_names = random.sample(specific_names, num_specific_fact_cells)
+        sampled_specific_names = random.sample(
+            specific_names, num_specific_fact_cells
+        )
         random.shuffle(sampled_specific_names)
         sampled_facts = [
             random.sample(specific_facts_no_participant[name], 1)[0]

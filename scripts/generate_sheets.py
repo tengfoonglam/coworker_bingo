@@ -25,14 +25,17 @@ def main() -> None:
     )
 
     if specific_facts_read_result is None:
-        logging.error("Failed to load participant names and specific facts. Exiting.")
+        logging.error(
+            "Failed to load participant names and specific facts. Exiting."
+        )
         return
 
     participants, specific_facts = specific_facts_read_result
 
     logging.info(f"Loaded {len(participants)} participant names")
     logging.info(
-        f"Detected that {len(specific_facts)} participants provided at least one specific fact."
+        f"Detected that {len(specific_facts)} participants provided at least "
+        "one specific fact."
     )
 
     bingo_generator_data = BingoSheetGenerator.Data(
@@ -52,7 +55,9 @@ def main() -> None:
     progress_bar = Bar("Generating Bingo Sheets", max=total_number_sheets)
 
     logging.info(
-        f"Generating {cfg.NUMBER_PUZZLE_SETS} bingo sheet(s) each for {len(participants)} participants. Total sheets: {total_number_sheets}"
+        f"Generating {cfg.NUMBER_PUZZLE_SETS} bingo sheet(s) each for "
+        f"{len(participants)} participants. "
+        f"Total sheets: {total_number_sheets}"
     )
 
     for i in range(1, cfg.NUMBER_PUZZLE_SETS + 1):
@@ -63,19 +68,23 @@ def main() -> None:
                 data=bingo_generator_data,
             )
             sheet_size = cfg.BINGO_SHEET_CONFIG.sheet_size
-            stem = f"bingo_sheet_{participant_name}_{sheet_size}x{sheet_size}_{i}"
+            stem = (
+                f"bingo_sheet_{participant_name}_{sheet_size}x{sheet_size}_{i}"
+            )
             header = f"{stem} ---- Participant name: {participant_name}"
             SheetDrawer.draw_table(
                 sheet=sheet,
                 config=cfg.SHEET_DRAWER_CONFIG,
-                export_path=cfg.OUTPUT_DATA_PATH / f"{stem}.{cfg.OUTPUT_EXTENSION}",
+                export_path=cfg.OUTPUT_DATA_PATH
+                / f"{stem}.{cfg.OUTPUT_EXTENSION}",
                 header=header,
             )
             progress_bar.next()
 
     print("")  # Flush new text to next line after printing progress bar
     logging.info(
-        f"Co-worker bingo sheet generation complete, output files can be found in {cfg.OUTPUT_DATA_PATH}"
+        "Co-worker bingo sheet generation complete, "
+        f"output files can be found in {cfg.OUTPUT_DATA_PATH}"
     )
 
 

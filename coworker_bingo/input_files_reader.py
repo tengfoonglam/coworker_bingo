@@ -13,7 +13,9 @@ class InputFilesReader:
             with open(txt_file_path, "r") as file:
                 generic_facts = [line.strip() for line in file]
         except FileNotFoundError:
-            logging.error(f"Generic facts file '{txt_file_path}' was not found.")
+            logging.error(
+                f"Generic facts file '{txt_file_path}' was not found."
+            )
 
         return generic_facts
 
@@ -26,7 +28,9 @@ class InputFilesReader:
         try:
             df = pd.read_csv(csv_file_path)
         except FileNotFoundError:
-            logging.error(f"Specific facts file '{csv_file_path}' was not found.")
+            logging.error(
+                f"Specific facts file '{csv_file_path}' was not found."
+            )
 
         if df is None:
             return None
