@@ -24,7 +24,7 @@ def main() -> None:
     participants, specific_facts = specific_facts_read_result
 
     print(f"Loaded {len(participants)} participant names")
-    print(f"Detected that {len(specific_facts)} participants provided at least one specific facts.")
+    print(f"Detected that {len(specific_facts)} participants provided at least one specific fact.")
 
     participants_list_alphabetical = list(participants)
     participants_list_alphabetical.sort()
