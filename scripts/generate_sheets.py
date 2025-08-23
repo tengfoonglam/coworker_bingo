@@ -55,10 +55,10 @@ def main() -> None:
     progress_bar = Bar("Generating Bingo Sheets", max=total_number_sheets)
 
     logging.info(
-        f"Generating {cfg.NUMBER_PUZZLE_SETS} bingo sheet(s) each for "
-        f"{len(participants)} participants. "
-        f"Total sheets: {total_number_sheets}"
+        f"Generating bingo sheets for {len(participants)} participants "
+        f"({cfg.NUMBER_PUZZLE_SETS} each)"
     )
+    logging.info(f"Total sheets: {total_number_sheets}")
 
     for i in range(1, cfg.NUMBER_PUZZLE_SETS + 1):
         for participant_name in participants_list_alphabetical:

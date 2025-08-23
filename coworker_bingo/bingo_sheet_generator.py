@@ -44,7 +44,8 @@ class BingoSheetGenerator:
 
         @property
         def num_cells(self) -> int:
-            """Total number of cells in the bingo sheet
+            """
+            Total number of cells in the bingo sheet
 
             Returns:
                 Aforementioned quantity
@@ -52,7 +53,8 @@ class BingoSheetGenerator:
             return self.sheet_size**2
 
         def is_valid(self) -> bool:
-            """Boolean whether the config is valid or not
+            """
+            Boolean whether the config is valid or not
 
             Returns:
                 Aforementioned quantity
@@ -69,13 +71,33 @@ class BingoSheetGenerator:
 
     @dataclass
     class Data:
-        """_summary_"""
+        """
+        Data required to populate the cells of the bingo sheet
 
-        generic_facts: List[str]
-        specific_facts: Dict[str, list[str]]
+        Attributes:
+            generic_facts: List of generic facts
+            specific_facts: Dictionary of specific facts where the key is the
+            the name of the participant and the value is a list of specific
+            facts that belong to him/her
+        """
+
+        generic_facts: Set[str]
+        specific_facts: Dict[str, List[str]]
 
     @staticmethod
     def check_config_and_data(config: Config, data: Data) -> bool:
+        """
+        Check that config and data is valid to successfully generate a bingo
+        sheet
+
+        Arguments:
+            config -- Bingo sheet config
+            data -- Bingo sheet data
+
+        Returns:
+            boolean on whether the config-data pair has passed the check
+        """
+
         if not config.is_valid():
             return False
 
@@ -90,6 +112,16 @@ class BingoSheetGenerator:
                 f"bingo sheet ({num_specific_fact_cells})."
             )
             return False
+
+        # Ensure no empty list in specific facts
+        for name, facts in data.specific_facts.items():
+            if len(facts) == 0:
+                logging.error(
+                    f"The list of specific facts for participant {name} "
+                    "is empty. "
+                    "Remove all entry or populate list with a least one fact."
+                )
+                return False
 
         # Number of generic facts check
         num_generic_facts = len(data.generic_facts)
@@ -108,6 +140,20 @@ class BingoSheetGenerator:
     def generate(
         participant_name: str, config: Config, data: Data
     ) -> pd.DataFrame:
+        """
+        Generate a bingo sheet for a single participant to the specified
+        config, using the data provided
+
+        Arguments:
+            participant_name -- Name of the participant
+            config -- Bingo sheet config
+            data -- Bingo sheet data
+
+        Returns:
+            Generated bingo sheet with sheet_size number rows and sheet_size
+            number cols
+        """
+
         num_cells = config.num_cells
         num_specific_fact_cells = len(config.specific_fact_indexes)
         num_generic_fact_cells = num_cells - num_specific_fact_cells
