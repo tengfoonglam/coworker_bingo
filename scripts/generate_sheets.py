@@ -30,6 +30,7 @@ def main() -> None:
 
     if not BingoSheetGenerator.check_config_and_data(config=cfg.BINGO_SHEET_CONFIG, data=bingo_generator_data):
         print("Bingo config and data is invalid. Exiting.")
+        return
 
     participants_list_alphabetical = list(participants)
     participants_list_alphabetical.sort()
