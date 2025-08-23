@@ -1,6 +1,7 @@
 # Co-Worker Bingo Sheet Generator
 
 
+<img src="./media/sample_bingo_sheet.png" alt="example_bingo_sheet" width="600"/>
 
 ## System Requirements
 - Python >=3.10
