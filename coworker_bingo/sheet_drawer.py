@@ -1,11 +1,12 @@
 import df2img
 import os
+import logging
 import pandas as pd
 import sys
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Tuple
+from typing import Set, Tuple
 
 
 class SheetDrawer:
@@ -13,6 +14,8 @@ class SheetDrawer:
     Methods and dataclasses to render a bingo sheet into a printable file
     format
     """
+
+    SUPPORTED_EXPORT_FORMATS: Set[str] = {".png", ".pdf", "jpg"}
 
     @dataclass
     class Config:
@@ -39,8 +42,32 @@ class SheetDrawer:
 
     @staticmethod
     def draw_table(
-        sheet: pd.DataFrame, config: Config, export_path: Path, header: str
-    ) -> None:
+        sheet: pd.DataFrame, config: Config, export_path: Path, title: str
+    ) -> bool:
+        """
+        Write a bingo sheet to a file
+
+        Arguments:
+            sheet: Bingo sheet
+            config: Drawer config
+            export_path: Location to save file to (end of the path needs to
+            end with and extension specified in class variable
+            SUPPORTED_EXPORT_FORMATS)
+            title: Title that will be shown above the table
+
+        Returns:
+            Boolean on whether the bingo sheet has been saved successfully
+            to the specified export_path
+        """
+
+        if export_path.suffix not in SheetDrawer.SUPPORTED_EXPORT_FORMATS:
+            logging.error(
+                f"Failed to draw bingo sheet at {export_path}. "
+                f"Export path has invalid extension {export_path.suffix}. "
+                f"Supported extentions: {SheetDrawer.SUPPORTED_EXPORT_FORMATS}"
+            )
+            return False
+
         # Disable prints because the drawing of the sheet has a lot of verbose
         sys.stdout = open(os.devnull, "w")
 
@@ -52,7 +79,7 @@ class SheetDrawer:
                 font_color="black",
                 font_family=config.title_font,
                 font_size=config.title_font_size,
-                text=header,
+                text=title,
             ),
             tbl_header=dict(
                 align="center",
@@ -72,3 +99,5 @@ class SheetDrawer:
 
         # Revert standard output back to normal
         sys.stdout = sys.__stdout__
+
+        return True

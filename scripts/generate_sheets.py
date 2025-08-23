@@ -71,14 +71,21 @@ def main() -> None:
             stem = (
                 f"bingo_sheet_{participant_name}_{sheet_size}x{sheet_size}_{i}"
             )
-            header = f"{stem} ---- Participant name: {participant_name}"
-            SheetDrawer.draw_table(
+            export_path = (
+                cfg.OUTPUT_DATA_PATH / f"{stem}.{cfg.OUTPUT_EXTENSION}"
+            )
+            title = f"{stem} ---- Participant name: {participant_name}"
+            if not SheetDrawer.draw_table(
                 sheet=sheet,
                 config=cfg.SHEET_DRAWER_CONFIG,
-                export_path=cfg.OUTPUT_DATA_PATH
-                / f"{stem}.{cfg.OUTPUT_EXTENSION}",
-                header=header,
-            )
+                export_path=export_path,
+                title=title,
+            ):
+                logging.error(
+                    f"Failed to save bingo sheet to {export_path}. Exiting."
+                )
+                return
+
             progress_bar.next()
 
     print("")  # Flush new text to next line after printing progress bar
