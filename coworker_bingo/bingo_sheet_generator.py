@@ -13,6 +13,17 @@ class BingoSheetGenerator:
         specific_fact_indexes: Set[int]
         random_seed: int
 
+        @property
+        def num_cells(self) -> int:
+            return self.sheet_size**2
+
+        def is_valid(self) -> bool:
+            specific_fact_indexes_valid = all([idx < self.num_cells for idx in self.specific_fact_indexes])
+            if not specific_fact_indexes_valid:
+                print("Invalid specific fact indexes - All values should be "
+                      f">= 0 and < total number of bingo cells ({self.num_cells}).")
+            return specific_fact_indexes_valid
+
     @dataclass
     class Data:
         generic_facts: List[str]
@@ -20,19 +31,37 @@ class BingoSheetGenerator:
 
     @staticmethod
     def check_config_and_data(config: Config, data: Data) -> bool:
+        if not config.is_valid():
+            return False
+
+        # Number of specific facts check
+        num_specific_fact_cells = len(config.specific_fact_indexes)
+        num_participants_with_specific_facts = len(data.specific_facts)
+        if num_participants_with_specific_facts < num_specific_fact_cells:
+            print(f"Number of participants that provided specific facts ({num_participants_with_specific_facts}) "
+                  f"is less than the required number of specific facts per bingo sheet ({num_specific_fact_cells}).")
+            return False
+
+        # Number of generic facts check
+        num_generic_facts = len(data.generic_facts)
+        num_generic_fact_cells = config.num_cells - num_specific_fact_cells
+        if num_generic_facts < num_generic_fact_cells:
+            print(f"Number of generic facts provided ({num_generic_facts}) "
+                  f"is less than the required number of generic facts per bingo sheet ({num_generic_fact_cells}).")
+            return False
+
         return True
 
     @staticmethod
     def generate(participant_name: str, config: Config, data: Data) -> pd.DataFrame:
-        num_grids = config.sheet_size**2
-
-        num_specific_fact_grids = len(config.specific_fact_indexes)
-        num_generic_fact_grids = num_grids - num_specific_fact_grids
+        num_cells = config.num_cells
+        num_specific_fact_cells = len(config.specific_fact_indexes)
+        num_generic_fact_cells = num_cells - num_specific_fact_cells
 
         # Pick generic facts
-        generic_fact_indexes = set([i for i in range(num_grids)]) - config.specific_fact_indexes
-        assert (num_generic_fact_grids == len(generic_fact_indexes))
-        generic_facts = random.sample(data.generic_facts, num_generic_fact_grids)
+        generic_fact_indexes = set([i for i in range(num_cells)]) - config.specific_fact_indexes
+        assert (num_generic_fact_cells == len(generic_fact_indexes))
+        generic_facts = random.sample(data.generic_facts, num_generic_fact_cells)
         random.shuffle(generic_facts)
 
         # Pick specific facts (excluding the participant's own facts)
@@ -40,12 +69,12 @@ class BingoSheetGenerator:
         if participant_name in specific_facts_no_participant:
             del specific_facts_no_participant[participant_name]
         specific_names = list(specific_facts_no_participant.keys())
-        sampled_specific_names = random.sample(specific_names, num_specific_fact_grids)
+        sampled_specific_names = random.sample(specific_names, num_specific_fact_cells)
         random.shuffle(sampled_specific_names)
         sampled_facts = [random.sample(specific_facts_no_participant[name], 1)[0] for name in sampled_specific_names]
 
         # Create sheet
-        sheet = ["" for _ in range(num_grids)]
+        sheet = ["" for _ in range(num_cells)]
         for idx, gen_fact in zip(generic_fact_indexes, generic_facts):
             sheet[idx] = gen_fact
         for idx, gen_fact in zip(config.specific_fact_indexes, sampled_facts):
