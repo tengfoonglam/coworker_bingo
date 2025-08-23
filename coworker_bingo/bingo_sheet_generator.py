@@ -8,17 +8,55 @@ from typing import Dict, List, Set
 
 
 class BingoSheetGenerator:
+    """
+    Methods and dataclasses to generate a bingo sheet as a Pandas Dataframe
+    """
+
     @dataclass
     class Config:
+        """
+        Configuration for a bingo sheet
+
+        Definition for indexes:
+        Index from 0 to (total number of cells - 1) in row major order
+        For example, a 3x3 bingo sheet would have the following indexes
+
+        +---+---+---+
+        | 0 | 1 | 2 |
+        +---+---+---+
+        | 3 | 4 | 5 |
+        +---+---+---+
+        | 6 | 7 | 8 |
+        +---+---+---+
+
+        Attributes:
+            sheet_size: Number of cells in a rol/col the bingo sheet
+            specific_fact_indexes: Indexes where a specific fact will be
+            inserted into the sheet. Other cells will be filled with generic
+            facts
+            random_seed: Random seed to initialise the pseudorandom number
+            generator
+        """
+
         sheet_size: int
         specific_fact_indexes: Set[int]
         random_seed: int
 
         @property
         def num_cells(self) -> int:
+            """Total number of cells in the bingo sheet
+
+            Returns:
+                Aforementioned quantity
+            """
             return self.sheet_size**2
 
         def is_valid(self) -> bool:
+            """Boolean whether the config is valid or not
+
+            Returns:
+                Aforementioned quantity
+            """
             specific_fact_indexes_valid = all(
                 [idx < self.num_cells for idx in self.specific_fact_indexes]
             )
@@ -31,6 +69,8 @@ class BingoSheetGenerator:
 
     @dataclass
     class Data:
+        """_summary_"""
+
         generic_facts: List[str]
         specific_facts: Dict[str, list[str]]
 
@@ -71,6 +111,8 @@ class BingoSheetGenerator:
         num_cells = config.num_cells
         num_specific_fact_cells = len(config.specific_fact_indexes)
         num_generic_fact_cells = num_cells - num_specific_fact_cells
+
+        random.seed(config.random_seed)
 
         # Pick generic facts
         generic_fact_indexes = (
