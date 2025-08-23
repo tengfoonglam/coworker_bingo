@@ -19,10 +19,14 @@ class BingoSheetGenerator:
             return self.sheet_size**2
 
         def is_valid(self) -> bool:
-            specific_fact_indexes_valid = all([idx < self.num_cells for idx in self.specific_fact_indexes])
+            specific_fact_indexes_valid = all(
+                [idx < self.num_cells for idx in self.specific_fact_indexes]
+            )
             if not specific_fact_indexes_valid:
-                logging.error("Invalid specific fact indexes - All values should be "
-                              f">= 0 and < total number of bingo cells ({self.num_cells}).")
+                logging.error(
+                    "Invalid specific fact indexes - Values should be >= 0 "
+                    f"and < total number of bingo cells ({self.num_cells})."
+                )
             return specific_fact_indexes_valid
 
     @dataclass
@@ -40,8 +44,11 @@ class BingoSheetGenerator:
         num_participants_with_specific_facts = len(data.specific_facts)
         if num_participants_with_specific_facts < num_specific_fact_cells:
             logging.error(
-                f"Number of participants that provided specific facts ({num_participants_with_specific_facts}) "
-                f"is less than the required number of specific facts per bingo sheet ({num_specific_fact_cells}).")
+                "Number of participants that provided specific facts "
+                f"({num_participants_with_specific_facts}) "
+                "is less than the required number of specific facts per "
+                f"bingo sheet ({num_specific_fact_cells})."
+            )
             return False
 
         # Number of generic facts check
@@ -50,7 +57,9 @@ class BingoSheetGenerator:
         if num_generic_facts < num_generic_fact_cells:
             logging.error(
                 f"Number of generic facts provided ({num_generic_facts}) "
-                f"is less than the required number of generic facts per bingo sheet ({num_generic_fact_cells}).")
+                "is less than the required number of generic facts per "
+                f"bingo sheet ({num_generic_fact_cells})."
+            )
             return False
 
         return True
@@ -62,8 +71,10 @@ class BingoSheetGenerator:
         num_generic_fact_cells = num_cells - num_specific_fact_cells
 
         # Pick generic facts
-        generic_fact_indexes = set([i for i in range(num_cells)]) - config.specific_fact_indexes
-        assert (num_generic_fact_cells == len(generic_fact_indexes))
+        generic_fact_indexes = (
+            set([i for i in range(num_cells)]) - config.specific_fact_indexes
+        )
+        assert num_generic_fact_cells == len(generic_fact_indexes)
         generic_facts = random.sample(data.generic_facts, num_generic_fact_cells)
         random.shuffle(generic_facts)
 
@@ -74,7 +85,10 @@ class BingoSheetGenerator:
         specific_names = list(specific_facts_no_participant.keys())
         sampled_specific_names = random.sample(specific_names, num_specific_fact_cells)
         random.shuffle(sampled_specific_names)
-        sampled_facts = [random.sample(specific_facts_no_participant[name], 1)[0] for name in sampled_specific_names]
+        sampled_facts = [
+            random.sample(specific_facts_no_participant[name], 1)[0]
+            for name in sampled_specific_names
+        ]
 
         # Create sheet
         sheet = ["" for _ in range(num_cells)]
@@ -82,10 +96,13 @@ class BingoSheetGenerator:
             sheet[idx] = gen_fact
         for idx, gen_fact in zip(config.specific_fact_indexes, sampled_facts):
             sheet[idx] = gen_fact
-        assert (not any([len(fact) == 0 for fact in sheet]))
+        assert not any([len(fact) == 0 for fact in sheet])
 
         sheet_size = config.sheet_size
-        data = [sheet[i * sheet_size:i * sheet_size + sheet_size] for i in range(sheet_size)]
+        data = [
+            sheet[i * sheet_size : i * sheet_size + sheet_size]
+            for i in range(sheet_size)
+        ]
         columns = [str(i) for i in range(sheet_size)]
 
         return pd.DataFrame(data=data, columns=columns)
