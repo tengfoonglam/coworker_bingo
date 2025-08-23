@@ -1,3 +1,4 @@
+import logging
 import random
 import pandas as pd
 
@@ -20,8 +21,8 @@ class BingoSheetGenerator:
         def is_valid(self) -> bool:
             specific_fact_indexes_valid = all([idx < self.num_cells for idx in self.specific_fact_indexes])
             if not specific_fact_indexes_valid:
-                print("Invalid specific fact indexes - All values should be "
-                      f">= 0 and < total number of bingo cells ({self.num_cells}).")
+                logging.error("Invalid specific fact indexes - All values should be "
+                              f">= 0 and < total number of bingo cells ({self.num_cells}).")
             return specific_fact_indexes_valid
 
     @dataclass
@@ -38,16 +39,18 @@ class BingoSheetGenerator:
         num_specific_fact_cells = len(config.specific_fact_indexes)
         num_participants_with_specific_facts = len(data.specific_facts)
         if num_participants_with_specific_facts < num_specific_fact_cells:
-            print(f"Number of participants that provided specific facts ({num_participants_with_specific_facts}) "
-                  f"is less than the required number of specific facts per bingo sheet ({num_specific_fact_cells}).")
+            logging.error(
+                f"Number of participants that provided specific facts ({num_participants_with_specific_facts}) "
+                f"is less than the required number of specific facts per bingo sheet ({num_specific_fact_cells}).")
             return False
 
         # Number of generic facts check
         num_generic_facts = len(data.generic_facts)
         num_generic_fact_cells = config.num_cells - num_specific_fact_cells
         if num_generic_facts < num_generic_fact_cells:
-            print(f"Number of generic facts provided ({num_generic_facts}) "
-                  f"is less than the required number of generic facts per bingo sheet ({num_generic_fact_cells}).")
+            logging.error(
+                f"Number of generic facts provided ({num_generic_facts}) "
+                f"is less than the required number of generic facts per bingo sheet ({num_generic_fact_cells}).")
             return False
 
         return True

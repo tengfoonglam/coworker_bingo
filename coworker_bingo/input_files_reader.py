@@ -1,3 +1,4 @@
+import logging
 import pandas as pd
 
 from pathlib import Path
@@ -12,7 +13,7 @@ class InputFilesReader:
             with open(txt_file_path, 'r') as file:
                 generic_facts = [line.strip() for line in file]
         except FileNotFoundError:
-            print(f"Generic facts file '{txt_file_path}' was not found.")
+            logging.error(f"Generic facts file '{txt_file_path}' was not found.")
 
         return generic_facts
 
@@ -24,7 +25,7 @@ class InputFilesReader:
         try:
             df = pd.read_csv(csv_file_path)
         except FileNotFoundError:
-            print(f"Specific facts file '{csv_file_path}' was not found.")
+            logging.error(f"Specific facts file '{csv_file_path}' was not found.")
 
         if df is None:
             return None
@@ -33,11 +34,11 @@ class InputFilesReader:
         participants = set(participants_list)
 
         if len(participants_list) == 0:
-            print("No participants found.")
+            logging.error("No participants found.")
             return None
 
         if len(participants) != len(participants_list):
-            print("Participant names are not unique. Ensure that there are no duplicate names.")
+            logging.error("Participant names are not unique. Ensure that there are no duplicate names.")
             return None
 
         specific_facts = dict()
