@@ -1,0 +1,10 @@
+matplotlib
+pandas
+pillow==9.5.0
+pillowdrawtable
+PyQt5
+PySide2
+df2img
+progress
+
+pre-commit
