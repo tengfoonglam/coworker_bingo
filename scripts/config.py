@@ -34,3 +34,6 @@ SHEET_DRAWER_CONFIG = SheetDrawer.Config(
     cell_height=100,    # Increase accordingly if facts overflow out of cell
     fig_size=(750, 750)    # Increase accordingly if only a portion of the table is rendered in the drawn sheet
 )
+
+# Miscellaneous options
+RANDOM_SEED = 1

@@ -39,7 +39,8 @@ def main() -> None:
                                                             participants=participants,
                                                             generic_facts=generic_facts,
                                                             specific_facts=specific_facts,
-                                                            specific_fact_indexes=cfg.SPECIFIC_FACT_INDEXES)
+                                                            specific_fact_indexes=cfg.SPECIFIC_FACT_INDEXES,
+                                                            random_seed=cfg.RANDOM_SEED)
             sheet = BingoSheetGenerator.generate(config=bingo_sheet_config)
             stem = f"bingo_sheet_{participant}_{cfg.SHEET_SIZE}x{cfg.SHEET_SIZE}_{i}"
             header = f"{stem} ---- Participant name: {bingo_sheet_config.participant}"

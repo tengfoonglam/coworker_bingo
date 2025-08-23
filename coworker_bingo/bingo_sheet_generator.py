@@ -15,6 +15,7 @@ class BingoSheetGenerator:
         generic_facts: List[str]
         specific_facts: Dict[str, list[str]]
         specific_fact_indexes: Set[int]
+        random_seed: int
 
     @staticmethod
     def generate(config: Config) -> pd.DataFrame:
