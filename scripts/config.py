@@ -1,15 +1,20 @@
 from pathlib import Path
-from coworker_bingo import SheetDrawer
+from coworker_bingo import BingoSheetGenerator, SheetDrawer
+
+# Sheet generation options
+NUMBER_PUZZLE_SETS = 1    # Number of puzzles generated per person
+RANDOM_SEED = 1
 
 # Uncomment below for 5x5 Bingo Sheets
-# SHEET_SIZE = 5
-# NUMBER_PUZZLE_SETS = 1
-# SPECIFIC_FACT_INDEXES = {0, 4, 6, 8, 12, 16, 18, 20, 24}
+# BINGO_SHEET_CONFIG = BingoSheetGenerator.Config(
+#     sheet_size=5,
+#     specific_fact_indexes= {0, 4, 6, 8, 12, 16, 18, 20, 24},
+#     random_seed=RANDOM_SEED)
 
 # Uncomment below for 6x6 Bingo Sheets
-SHEET_SIZE = 6
-NUMBER_PUZZLE_SETS = 1
-SPECIFIC_FACT_INDEXES = {0, 5, 7, 10, 14, 15, 20, 21, 25, 28, 30, 35}
+BINGO_SHEET_CONFIG = BingoSheetGenerator.Config(sheet_size=6,
+                                                specific_fact_indexes={0, 5, 7, 10, 14, 15, 20, 21, 25, 28, 30, 35},
+                                                random_seed=RANDOM_SEED)
 
 # Input data location
 INPUT_FOLDER_NAME = "input_files"
@@ -18,7 +23,8 @@ SPECIFIC_FACTS_FILE_PATH = GIT_ROOT_DIRECTORY / INPUT_FOLDER_NAME / "specific_fa
 GENERIC_FACTS_FILE_PATH = GIT_ROOT_DIRECTORY / INPUT_FOLDER_NAME / "generic_facts.txt"
 
 # Output data location
-OUTPUT_DATA_PATH = GIT_ROOT_DIRECTORY / "generated_sheets"
+OUTPUT_FOLDER_NAME = "generated_sheets"
+OUTPUT_DATA_PATH = GIT_ROOT_DIRECTORY / OUTPUT_FOLDER_NAME
 
 # Specific facts csv info
 NAME_COL = "Name"
@@ -36,4 +42,3 @@ SHEET_DRAWER_CONFIG = SheetDrawer.Config(
 )
 
 # Miscellaneous options
-RANDOM_SEED = 1

@@ -26,14 +26,10 @@ def main() -> None:
     print(f"Loaded {len(participants)} participant names")
     print(f"Detected that {len(specific_facts)} participants provided at least one specific fact.")
 
-    bingo_sheet_generator_config = BingoSheetGenerator.Config(sheet_size=cfg.SHEET_SIZE,
-                                                              generic_facts=generic_facts,
-                                                              specific_facts=specific_facts,
-                                                              specific_fact_indexes=cfg.SPECIFIC_FACT_INDEXES,
-                                                              random_seed=cfg.RANDOM_SEED)
-    if not bingo_sheet_generator_config.is_valid():
-        print("Invalid bingo sheet generator config. Exiting.")
-        return
+    bingo_generator_data = BingoSheetGenerator.Data(generic_facts=generic_facts, specific_facts=specific_facts)
+
+    if not BingoSheetGenerator.check_config_and_data(config=cfg.BINGO_SHEET_CONFIG, data=bingo_generator_data):
+        print("Bingo config and data is invalid. Exiting.")
 
     participants_list_alphabetical = list(participants)
     participants_list_alphabetical.sort()
@@ -43,8 +39,11 @@ def main() -> None:
 
     for i in range(1, cfg.NUMBER_PUZZLE_SETS + 1):
         for participant_name in participants_list_alphabetical:
-            sheet = BingoSheetGenerator.generate(participant_name=participant_name, config=bingo_sheet_generator_config)
-            stem = f"bingo_sheet_{participant_name}_{cfg.SHEET_SIZE}x{cfg.SHEET_SIZE}_{i}"
+            sheet = BingoSheetGenerator.generate(participant_name=participant_name,
+                                                 config=cfg.BINGO_SHEET_CONFIG,
+                                                 data=bingo_generator_data)
+            sheet_size = cfg.BINGO_SHEET_CONFIG.sheet_size
+            stem = f"bingo_sheet_{participant_name}_{sheet_size}x{sheet_size}_{i}"
             header = f"{stem} ---- Participant name: {participant_name}"
             SheetDrawer.draw_table(sheet=sheet,
                                    config=cfg.SHEET_DRAWER_CONFIG,

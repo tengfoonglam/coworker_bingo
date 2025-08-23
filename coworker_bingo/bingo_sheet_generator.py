@@ -10,16 +10,20 @@ class BingoSheetGenerator:
     @dataclass
     class Config:
         sheet_size: int
-        generic_facts: List[str]
-        specific_facts: Dict[str, list[str]]
         specific_fact_indexes: Set[int]
         random_seed: int
 
-        def is_valid(self) -> bool:
-            return True
+    @dataclass
+    class Data:
+        generic_facts: List[str]
+        specific_facts: Dict[str, list[str]]
 
     @staticmethod
-    def generate(participant_name: str, config: Config) -> pd.DataFrame:
+    def check_config_and_data(config: Config, data: Data) -> bool:
+        return True
+
+    @staticmethod
+    def generate(participant_name: str, config: Config, data: Data) -> pd.DataFrame:
         num_grids = config.sheet_size**2
 
         num_specific_fact_grids = len(config.specific_fact_indexes)
@@ -28,11 +32,11 @@ class BingoSheetGenerator:
         # Pick generic facts
         generic_fact_indexes = set([i for i in range(num_grids)]) - config.specific_fact_indexes
         assert (num_generic_fact_grids == len(generic_fact_indexes))
-        generic_facts = random.sample(config.generic_facts, num_generic_fact_grids)
+        generic_facts = random.sample(data.generic_facts, num_generic_fact_grids)
         random.shuffle(generic_facts)
 
         # Pick specific facts (excluding the participant's own facts)
-        specific_facts_no_participant = deepcopy(config.specific_facts)
+        specific_facts_no_participant = deepcopy(data.specific_facts)
         if participant_name in specific_facts_no_participant:
             del specific_facts_no_participant[participant_name]
         specific_names = list(specific_facts_no_participant.keys())
