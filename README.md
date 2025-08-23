@@ -32,6 +32,8 @@ Replace/edit the following files in the `input_files` directory
 - For example, a row would have its first entry as the participant's name and then the rest of the entries are special facts about that participant
 - It is fine if a participant does not provide any facts or less than the maximum allowed number of facts
 - You can create a questionnaire (e.g. using Google Forms) to collate the required information
+- **IMPORTANT**: Remove all **commas** from each fact as it will affect the reading of the information from the csv file
+
 
 ## Generating the Bingo Sheets
 
