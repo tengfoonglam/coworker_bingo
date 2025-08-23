@@ -9,8 +9,27 @@ from typing import Tuple
 
 
 class SheetDrawer:
+    """
+    Methods and dataclasses to render a bingo sheet into a printable file
+    format
+    """
+
     @dataclass
     class Config:
+        """
+        Configuration of how the bingo sheet is rendered
+
+        Attributes:
+            title_font: Font of the title
+            title_font_size: Font size of the title
+            cell_font: Font of the facts in each cell
+            cell_font_size: Font size of the facts in each cell
+            cell_height: Height of each cell. Increase accordingly if facts
+            overflow out of cell
+            fig_size: Size of the entire bingo sheet. Increase accordingly if
+            only a portion of the table is rendered in the drawn sheet
+        """
+
         title_font: str = "Times New Roman"
         title_font_size: int = 16
         cell_font: str = "Times New Roman"

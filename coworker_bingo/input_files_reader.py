@@ -6,8 +6,21 @@ from typing import Dict, List, Optional, Tuple, Set
 
 
 class InputFilesReader:
+    """
+    Methods to read the data required to generate the co-worker bingo sheets
+    """
+
     @staticmethod
     def read_generic_facts(txt_file_path: Path) -> Optional[List[str]]:
+        """
+        Read the generic facts .txt file
+
+        Arguments:
+            txt_file_path -- Path to the generic facts text file
+
+        Returns:
+            List of generic facts. None if there was an error reading the file
+        """
         generic_facts = None
         try:
             with open(txt_file_path, "r") as file:
@@ -23,6 +36,21 @@ class InputFilesReader:
     def read_participant_names_and_specific_facts(
         csv_file_path: Path, name_col: str
     ) -> Optional[Tuple[Set[str], Dict[str, List[str]]]]:
+        """
+        Read the specific facts csv file
+
+        Arguments:
+            csv_file_path -- Path to the specific facts csv file
+            name_col -- Label of the column in the csv table that indicates the
+            name of the participants
+
+        Returns:
+            A tuple where the first element is a unique set of participant
+            names. The second element a dictionary where the key is the
+            participant name and the value is a list of facts that belong to
+            him/her. None if there was an error reading the file
+        """
+
         df = None
 
         try:
