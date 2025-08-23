@@ -26,6 +26,15 @@ def main() -> None:
     print(f"Loaded {len(participants)} participant names")
     print(f"Detected that {len(specific_facts)} participants provided at least one specific fact.")
 
+    bingo_sheet_generator_config = BingoSheetGenerator.Config(sheet_size=cfg.SHEET_SIZE,
+                                                              generic_facts=generic_facts,
+                                                              specific_facts=specific_facts,
+                                                              specific_fact_indexes=cfg.SPECIFIC_FACT_INDEXES,
+                                                              random_seed=cfg.RANDOM_SEED)
+    if not bingo_sheet_generator_config.is_valid():
+        print("Invalid bingo sheet generator config. Exiting.")
+        return
+
     participants_list_alphabetical = list(participants)
     participants_list_alphabetical.sort()
 
@@ -33,17 +42,10 @@ def main() -> None:
     progress_bar = Bar("Generating Bingo Sheets", max=total_number_sheets)
 
     for i in range(1, cfg.NUMBER_PUZZLE_SETS + 1):
-        for participant in participants_list_alphabetical:
-            bingo_sheet_config = BingoSheetGenerator.Config(sheet_size=cfg.SHEET_SIZE,
-                                                            participant=participant,
-                                                            participants=participants,
-                                                            generic_facts=generic_facts,
-                                                            specific_facts=specific_facts,
-                                                            specific_fact_indexes=cfg.SPECIFIC_FACT_INDEXES,
-                                                            random_seed=cfg.RANDOM_SEED)
-            sheet = BingoSheetGenerator.generate(config=bingo_sheet_config)
-            stem = f"bingo_sheet_{participant}_{cfg.SHEET_SIZE}x{cfg.SHEET_SIZE}_{i}"
-            header = f"{stem} ---- Participant name: {bingo_sheet_config.participant}"
+        for participant_name in participants_list_alphabetical:
+            sheet = BingoSheetGenerator.generate(participant_name=participant_name, config=bingo_sheet_generator_config)
+            stem = f"bingo_sheet_{participant_name}_{cfg.SHEET_SIZE}x{cfg.SHEET_SIZE}_{i}"
+            header = f"{stem} ---- Participant name: {participant_name}"
             SheetDrawer.draw_table(sheet=sheet,
                                    config=cfg.SHEET_DRAWER_CONFIG,
                                    export_path=cfg.OUTPUT_DATA_PATH / f"{stem}.{cfg.OUTPUT_EXTENSION}",

@@ -10,15 +10,16 @@ class BingoSheetGenerator:
     @dataclass
     class Config:
         sheet_size: int
-        participant: str
-        participants: Set[str]
         generic_facts: List[str]
         specific_facts: Dict[str, list[str]]
         specific_fact_indexes: Set[int]
         random_seed: int
 
+        def is_valid(self) -> bool:
+            return True
+
     @staticmethod
-    def generate(config: Config) -> pd.DataFrame:
+    def generate(participant_name: str, config: Config) -> pd.DataFrame:
         num_grids = config.sheet_size**2
 
         num_specific_fact_grids = len(config.specific_fact_indexes)
@@ -30,14 +31,14 @@ class BingoSheetGenerator:
         generic_facts = random.sample(config.generic_facts, num_generic_fact_grids)
         random.shuffle(generic_facts)
 
-        # Pick specific facts
-        specific_facts_no_pariticipant = deepcopy(config.specific_facts)
-        if config.participant in specific_facts_no_pariticipant:
-            del specific_facts_no_pariticipant[config.participant]
-        specific_names = list(specific_facts_no_pariticipant.keys())
+        # Pick specific facts (excluding the participant's own facts)
+        specific_facts_no_participant = deepcopy(config.specific_facts)
+        if participant_name in specific_facts_no_participant:
+            del specific_facts_no_participant[participant_name]
+        specific_names = list(specific_facts_no_participant.keys())
         sampled_specific_names = random.sample(specific_names, num_specific_fact_grids)
         random.shuffle(sampled_specific_names)
-        sampled_facts = [random.sample(specific_facts_no_pariticipant[name], 1)[0] for name in sampled_specific_names]
+        sampled_facts = [random.sample(specific_facts_no_participant[name], 1)[0] for name in sampled_specific_names]
 
         # Create sheet
         sheet = ["" for _ in range(num_grids)]
