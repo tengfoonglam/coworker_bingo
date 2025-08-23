@@ -1,62 +1,39 @@
 import config as cfg
-import pandas as pd
 from progress.bar import Bar
 
-from coworker_bingo import BingoSheetGenerator, SheetDrawer
+from coworker_bingo import BingoSheetGenerator, InputFilesReader, SheetDrawer
 
 
 def main() -> None:
 
-    generic_facts = []
-    try:
-        with open(cfg.GENERIC_FACTS_FILE_PATH, 'r') as file:
-            for line in file:
-                generic_facts.append(line.strip())
-    except FileNotFoundError:
-        print(f"Generic facts file '{cfg.GENERIC_FACTS_FILE_PATH}' was not found. Exiting.")
+    generic_facts = InputFilesReader.read_generic_facts(txt_file_path=cfg.GENERIC_FACTS_FILE_PATH)
+
+    if generic_facts is None:
+        print("Failed to load generic facts file. Exiting.")
         return
 
     print(f"Loaded {len(generic_facts)} generic facts.")
 
-    try:
-        df = pd.read_csv(cfg.SPECIFIC_FACTS_FILE_PATH)
-    except FileNotFoundError:
-        print(f"Specific facts file '{cfg.SPECIFIC_FACTS_FILE_PATH}' was not found. Exiting.")
+    specific_facts_read_result = InputFilesReader.read_participant_names_and_specific_facts(
+        csv_file_path=cfg.SPECIFIC_FACTS_FILE_PATH, name_col=cfg.NAME_COL)
+
+    if specific_facts_read_result is None:
+        print("Failed to load participant names and specific facts. Exiting.")
         return
 
-    participants_list = df[cfg.NAME_COL].to_list()
-    participants = set(participants_list)
-
-    if len(participants_list) == 0:
-        print("No participants found. Exiting.")
-
-    if len(participants) != len(participants_list):
-        print("Participant names are not unique. Exiting.")
-        return
+    participants, specific_facts = specific_facts_read_result
 
     print(f"Loaded {len(participants)} participant names")
+    print(f"Detected that {len(specific_facts)} participants provided at least one specific facts.")
 
-    specific_facts = dict()
-    for _, row in df.iterrows():
-        row_dict = row.to_dict()
-        if cfg.NAME_COL not in row_dict:
-            continue
-        name = row_dict[cfg.NAME_COL]
-        if name not in participants:
-            continue
-        single_participant_personal_fact = [
-            val for key, val in row_dict.items() if key != cfg.NAME_COL and not pd.isnull(val)
-        ]
-        if len(single_participant_personal_fact) > 0:
-            specific_facts[name] = single_participant_personal_fact
+    participants_list_alphabetical = list(participants)
+    participants_list_alphabetical.sort()
 
-    print(f"{len(specific_facts)} participants provided at least one specific facts.")
-
-    total_number_sheets = len(participants_list) * cfg.NUMBER_PUZZLE_SETS
+    total_number_sheets = len(participants) * cfg.NUMBER_PUZZLE_SETS
     progress_bar = Bar("Generating Bingo Sheets", max=total_number_sheets)
 
     for i in range(1, cfg.NUMBER_PUZZLE_SETS + 1):
-        for participant in participants_list:
+        for participant in participants_list_alphabetical:
             bingo_sheet_config = BingoSheetGenerator.Config(sheet_size=cfg.SHEET_SIZE,
                                                             participant=participant,
                                                             participants=participants,
@@ -72,7 +49,7 @@ def main() -> None:
                                    header=header)
             progress_bar.next()
 
-    print(f"\nSheet generation complete, output files can be found in {cfg.OUTPUT_DATA_PATH}")
+    print(f"\nCo-worker bingo sheet generation complete, output files can be found in {cfg.OUTPUT_DATA_PATH}")
 
 
 if __name__ == "__main__":
