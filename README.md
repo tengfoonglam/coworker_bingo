@@ -60,6 +60,8 @@ python scripts/generate_sheets.py
 4. By default, all bingo sheets will be saved in the `generated_sheets` folder
 5. Print out the sheets and enjoy the game! You can use a tool like [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) to combine all pdfs into a single file to be printed together
 
-### Google Slide with Game Rules
+### Game Rules Slide Deck
 
-A sample slide deck with game rules is provided and can be downloaded here so you do not have to spend any effort preparing it and just get started playing!
+A sample slide deck (pptx/odt) with game rules can be found in the `presentation_slides` folder so you do not have to spend any effort preparing it and just get started playing!
+
+<img src="./media/example_instructions.png" alt="example_bingo_sheet" width="600"/>
