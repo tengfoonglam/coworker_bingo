@@ -36,8 +36,8 @@ Replace/edit the following files in the `input_files` directory
 - Each line consists of a fact that should apply to multiple participants
 
 ##### 2. **specific_facts.csv**
-- First column "Name" should contain the names of all participants
-- Subsequent columns (Fact1, Fact2, ...) should contain unique facts that apply to the a specific participant
+- First column **Name** should contain the names of all participants
+- Subsequent columns (**Fact1**, **Fact2**, ...) should contain unique facts that apply to the a specific participant
 - For each row, the first entry is the participant's name and then the rest of the entries are special facts about that participant
 - It is fine if a participant does not provide any facts or less than the maximum allowed number of facts
 - You can create a questionnaire (e.g. using Google Forms) to collate the required information
