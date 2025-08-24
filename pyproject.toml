@@ -21,6 +21,9 @@ dev = [
     "ruff"
 ]
 
+[project.scripts]
+generate_coworker_bingo_sheets = "coworker_bingo.scripts.generate_sheets:main"
+
 [project.urls]
 Repository = "https://https://github.com/tengfoonglam/coworker_bingo"
 
@@ -64,5 +67,5 @@ line-ending = "auto"
 
 # Pytest options
 [tool.pytest.ini_options]
-testpaths = ["test"]
+testpaths = ["tests"]
 filterwarnings = "ignore::DeprecationWarning"

@@ -63,10 +63,10 @@ source venv/bin/activate
 # On Windows command prompt
 venv\Scripts\activate.bat
 ```
-2. Open `scripts/config.py` and adjust any necessary settings
+2. Open `coworker_bingo/scripts/config.py` and adjust any necessary settings
 3. Run the following command to generate the bingo sheets
 ```
-python scripts/generate_sheets.py
+generate_coworker_bingo_sheets
 ```
 4. By default, all bingo sheets will be saved in the `generated_sheets` folder
 5. Print out the sheets and enjoy the game! You can use a tool like [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) to combine all pdfs into a single file to be printed together
@@ -93,4 +93,12 @@ This repository uses [pre-commit hooks](https://pre-commit.com/) to ensure that 
 
 ```
 pre-commit install
+```
+
+#### Smoke Test
+
+A simple smoke test to test bingo sheet generation is working is included. To run it, just call
+
+```
+pytest
 ```
