@@ -2,7 +2,7 @@
 
 **Co-Worker Bingo** is a great ice breaker game to know your colleagues - one grid at a time! Each participant is given a bingo sheet with interesting facts of their colleagues and they have to go around and find out who the facts belong to. The person who collects the highest number of completed rows/columns/diagonals within the allotted time wins!
 
-In addition to being enjoyed in an office environment, Co-Worker Bingo can also be played among classmates, friends, and family members.
+Co-Worker Bingo can be played not only in a workplace setting but also among classmates, friends, and family to encourage team bonding and help everyone become familiar with one another.
 
 Creating these bingo sheets manually is a painstaking process especially for large groups. This repository contains the necessary Python code to quickly generate bingo sheets for groups with >10 people so the preparation process is as hassle-free as possible.
 
