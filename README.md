@@ -1,5 +1,13 @@
 # Co-Worker Bingo Sheet Generator
 
+**Co-Worker Bingo** is a great ice breaker game to know your colleagues - one grid at a time! Each participant is given a bingo sheet with interesting facts of their colleagues and they have to go around and find out who the facts belong to. The person who collects the highest number of completed rows/columns/diagonals within the allotted time wins!
+
+In addition to being enjoyed in an office environment, Co-Worker Bingo can also be played among classmates, friends, and family members.
+
+Creating these bingo sheets manually is a painstaking process especially for large groups. This repository contains the necessary Python code to quickly generate bingo sheets for groups with >10 people so the preparation process is as hassle-free as possible.
+
+
+### Example Generated Bingo Sheet
 
 <img src="./media/sample_bingo_sheet.png" alt="example_bingo_sheet" width="600"/>
 
@@ -30,7 +38,7 @@ Replace/edit the following files in the `input_files` directory
 ##### 2. **specific_facts.csv**
 - First column "Name" should contain the names of all participants
 - Subsequent columns (Fact1, Fact2, ...) should contain unique facts that apply to the a specific participant
-- For example, a row would have its first entry as the participant's name and then the rest of the entries are special facts about that participant
+- For each row, the first entry is the participant's name and then the rest of the entries are special facts about that participant
 - It is fine if a participant does not provide any facts or less than the maximum allowed number of facts
 - You can create a questionnaire (e.g. using Google Forms) to collate the required information
 - **IMPORTANT**: Remove all **commas** from each fact as it will affect the reading of the information from the csv file
