@@ -6,6 +6,7 @@ Co-Worker Bingo can be played not only in a workplace setting but also among cla
 
 Creating these bingo sheets manually is a painstaking process especially for large groups. This repository contains the necessary Python code to quickly generate bingo sheets for groups with >10 people so the preparation process is as hassle-free as possible.
 
+If you used this repository in one form or another please give it a **star** :star2:. Appreciate it!
 
 ### Example Generated Bingo Sheet
 
@@ -19,12 +20,19 @@ Creating these bingo sheets manually is a painstaking process especially for lar
 
 1. Clone/download the repo
 2. Start a terminal/command prompt at the git root directory
-3. Run the following commands to create a virtual env, install necessary packages and install the `coworker_bingo` package
+3. Run the following commands to install the `coworker_bingo` package
 
 ```
+# Create virtual env
 python -m venv venv
+
+# Activate virtual env
+# On MacOS/Linux
 source venv/bin/activate
-pip install -r requirements.txt
+# On Windows command prompt
+venv\Scripts\activate.bat
+
+# Install dependencies and coworker_bingo package
 pip install -e  .
 ```
 
@@ -50,12 +58,15 @@ Replace/edit the following files in the `input_files` directory
 
 1. Activate your Python virtual env (if you have not done so)
 ```
+# On MacOS/Linux
 source venv/bin/activate
+# On Windows command prompt
+venv\Scripts\activate.bat
 ```
-2. Open `scripts/config.py` and adjust any necessary settings
+2. Open `coworker_bingo/scripts/config.py` and adjust any necessary settings
 3. Run the following command to generate the bingo sheets
 ```
-python scripts/generate_sheets.py
+generate_coworker_bingo_sheets
 ```
 4. By default, all bingo sheets will be saved in the `generated_sheets` folder
 5. Print out the sheets and enjoy the game! You can use a tool like [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) to combine all pdfs into a single file to be printed together
@@ -66,7 +77,28 @@ A sample slide deck (pptx/odt) with game rules can be found in the `presentation
 
 <img src="./media/example_instructions.png" alt="example_bingo_sheet" width="600"/>
 
-### Licensing
+### Developer Setup
 
-- This repository is made open source under the [MIT License](https://opensource.org/license/mit)
-- If you used this repository in one form or another please give it a **star** :star2:. Appreciate it!
+##### Developer Dependencies
+
+If you are developing on top of the existing project, you can install the necessary developer tools by running
+
+```
+pip install -e .[dev]
+```
+
+##### Pre-Commit Hooks Setup
+
+This repository uses [pre-commit hooks](https://pre-commit.com/) to ensure that code is checked for simple issues before it is committed. It is installed as part of the developer dependencies. To run hooks on every commit, run
+
+```
+pre-commit install
+```
+
+#### Smoke Test
+
+A simple smoke test to test bingo sheet generation is working is included. To run it, just call
+
+```
+pytest
+```
