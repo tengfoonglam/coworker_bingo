@@ -8,17 +8,57 @@ from typing import Dict, List, Set
 
 
 class BingoSheetGenerator:
+    """
+    Methods and dataclasses to generate a bingo sheet as a Pandas Dataframe
+    """
+
     @dataclass
     class Config:
+        """
+        Configuration for a bingo sheet
+
+        Definition for indexes:
+        Index from 0 to (total number of cells - 1) in row major order
+        For example, a 3x3 bingo sheet would have the following indexes
+
+        +---+---+---+
+        | 0 | 1 | 2 |
+        +---+---+---+
+        | 3 | 4 | 5 |
+        +---+---+---+
+        | 6 | 7 | 8 |
+        +---+---+---+
+
+        Attributes:
+            sheet_size: Number of cells in a rol/col the bingo sheet
+            specific_fact_indexes: Indexes where a specific fact will be
+            inserted into the sheet. Other cells will be filled with generic
+            facts
+            random_seed: Random seed to initialise the pseudorandom number
+            generator
+        """
+
         sheet_size: int
         specific_fact_indexes: Set[int]
         random_seed: int
 
         @property
         def num_cells(self) -> int:
+            """
+            Total number of cells in the bingo sheet
+
+            Returns:
+                Aforementioned quantity
+            """
             return self.sheet_size**2
 
         def is_valid(self) -> bool:
+            """
+            Boolean whether the config is valid or not
+
+            Returns:
+                Aforementioned quantity
+            """
             specific_fact_indexes_valid = all(
                 [idx < self.num_cells for idx in self.specific_fact_indexes]
             )
@@ -31,11 +71,33 @@ class BingoSheetGenerator:
 
     @dataclass
     class Data:
-        generic_facts: List[str]
-        specific_facts: Dict[str, list[str]]
+        """
+        Data required to populate the cells of the bingo sheet
+
+        Attributes:
+            generic_facts: List of generic facts
+            specific_facts: Dictionary of specific facts where the key is the
+            the name of the participant and the value is a list of specific
+            facts that belong to him/her
+        """
+
+        generic_facts: Set[str]
+        specific_facts: Dict[str, List[str]]
 
     @staticmethod
     def check_config_and_data(config: Config, data: Data) -> bool:
+        """
+        Check that config and data is valid to successfully generate a bingo
+        sheet
+
+        Arguments:
+            config -- Bingo sheet config
+            data -- Bingo sheet data
+
+        Returns:
+            boolean on whether the config-data pair has passed the check
+        """
+
         if not config.is_valid():
             return False
 
@@ -50,6 +112,16 @@ class BingoSheetGenerator:
                 f"bingo sheet ({num_specific_fact_cells})."
             )
             return False
+
+        # Ensure no empty list in specific facts
+        for name, facts in data.specific_facts.items():
+            if len(facts) == 0:
+                logging.error(
+                    f"The list of specific facts for participant {name} "
+                    "is empty. "
+                    "Remove all entry or populate list with a least one fact."
+                )
+                return False
 
         # Number of generic facts check
         num_generic_facts = len(data.generic_facts)
@@ -68,9 +140,25 @@ class BingoSheetGenerator:
     def generate(
         participant_name: str, config: Config, data: Data
     ) -> pd.DataFrame:
+        """
+        Generate a bingo sheet for a single participant to the specified
+        config, using the data provided
+
+        Arguments:
+            participant_name -- Name of the participant
+            config -- Bingo sheet config
+            data -- Bingo sheet data
+
+        Returns:
+            Generated bingo sheet with sheet_size number rows and sheet_size
+            number cols
+        """
+
         num_cells = config.num_cells
         num_specific_fact_cells = len(config.specific_fact_indexes)
         num_generic_fact_cells = num_cells - num_specific_fact_cells
+
+        random.seed(config.random_seed)
 
         # Pick generic facts
         generic_fact_indexes = (
