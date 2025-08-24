@@ -17,7 +17,7 @@ Creating these bingo sheets manually is a painstaking process especially for lar
 
 ### Installation
 
-1. Clone the repo
+1. Clone/download the repo
 2. Start a terminal/command prompt at the git root directory
 3. Run the following commands to create a virtual env, install necessary packages and install the `coworker_bingo` package
 
