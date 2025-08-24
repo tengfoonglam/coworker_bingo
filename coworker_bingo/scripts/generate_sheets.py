@@ -1,11 +1,13 @@
 import logging
-import config as cfg
-from progress.bar import Bar
+import sys
 
 from coworker_bingo import BingoSheetGenerator, InputFilesReader, SheetDrawer
+from progress.bar import Bar
+
+import coworker_bingo.scripts.config as cfg
 
 
-def main() -> None:
+def main() -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(message)s")
 
     generic_facts = InputFilesReader.read_generic_facts(
@@ -14,7 +16,7 @@ def main() -> None:
 
     if generic_facts is None:
         logging.error("Failed to load generic facts file. Exiting.")
-        return
+        return 1
 
     logging.info(f"Loaded {len(generic_facts)} generic facts.")
 
@@ -28,7 +30,7 @@ def main() -> None:
         logging.error(
             "Failed to load participant names and specific facts. Exiting."
         )
-        return
+        return 1
 
     participants, specific_facts = specific_facts_read_result
 
@@ -46,7 +48,7 @@ def main() -> None:
         config=cfg.BINGO_SHEET_CONFIG, data=bingo_generator_data
     ):
         logging.error("Bingo config and data is invalid. Exiting.")
-        return
+        return 1
 
     participants_list_alphabetical = list(participants)
     participants_list_alphabetical.sort()
@@ -84,7 +86,7 @@ def main() -> None:
                 logging.error(
                     f"Failed to save bingo sheet to {export_path}. Exiting."
                 )
-                return
+                return 1
 
             progress_bar.next()
 
@@ -93,7 +95,8 @@ def main() -> None:
         "Co-worker bingo sheet generation complete, "
         f"output files can be found in {cfg.OUTPUT_DATA_PATH}"
     )
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

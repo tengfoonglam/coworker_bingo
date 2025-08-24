@@ -55,7 +55,7 @@ BINGO_SHEET_CONFIG = BingoSheetGenerator.Config(
 
 # Input data location
 INPUT_FOLDER_NAME = "input_files"
-GIT_ROOT_DIRECTORY = Path(__file__).resolve().parent.parent
+GIT_ROOT_DIRECTORY = Path(__file__).resolve().parent.parent.parent
 INPUT_FOLDER = GIT_ROOT_DIRECTORY / INPUT_FOLDER_NAME
 SPECIFIC_FACTS_FILE_PATH = INPUT_FOLDER / "specific_facts.csv"
 GENERIC_FACTS_FILE_PATH = INPUT_FOLDER / "generic_facts.txt"

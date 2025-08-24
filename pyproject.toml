@@ -9,7 +9,7 @@ description = "Co-worker bingo sheet generator"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "df2img",
+    "df2img==0.2.21",
     "pandas",
     "progress"
 ]
@@ -61,3 +61,8 @@ skip-magic-trailing-comma = false
 
 # Like Black, automatically detect the appropriate line ending.
 line-ending = "auto"
+
+# Pytest options
+[tool.pytest.ini_options]
+testpaths = ["test"]
+filterwarnings = "ignore::DeprecationWarning"
