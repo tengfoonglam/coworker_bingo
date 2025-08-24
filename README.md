@@ -46,7 +46,7 @@ Replace/edit the following files in the `input_files` directory
 
 ### Generating the Bingo Sheets
 
-**Note**: Sample data is provided in `input_files` folder so you can test out the generation script without any data collection
+**Note**: Sample data is provided in the `input_files` folder so you can test out the generation script without any data collection
 
 1. Activate your Python virtual env (if you have not done so)
 ```
@@ -65,3 +65,8 @@ python scripts/generate_sheets.py
 A sample slide deck (pptx/odt) with game rules can be found in the `presentation_slides` folder so you do not have to spend any effort preparing it and just get started playing!
 
 <img src="./media/example_instructions.png" alt="example_bingo_sheet" width="600"/>
+
+### Licensing
+
+- This repository is made open source under the [MIT License](https://opensource.org/license/mit)
+- If you used this repository in one form or another please give it a **star** :star2:. Appreciate it!
