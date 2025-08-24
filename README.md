@@ -80,6 +80,7 @@ A sample slide deck (pptx/odt) with game rules can be found in the `presentation
 ### Developer Setup
 
 ##### Developer Dependencies
+
 If you are developing on top of the existing project, you can install the necessary developer tools by running
 
 ```
@@ -88,7 +89,8 @@ pip install -e .[dev]
 
 ##### Pre-Commit Hooks Setup
 
-This repository uses [pre-commit hooks](https://pre-commit.com/) to ensure that code is checked for simple issues before it is committed.
-* Install pre-commit: `sudo apt install pre-commit`
-* Update pre-commit version to prevent this error `Type tag 'textproto' is not recognized`: `pip install --force-reinstall -U pre-commit`
-* Run hooks on every commit: `pre-commit install`
+This repository uses [pre-commit hooks](https://pre-commit.com/) to ensure that code is checked for simple issues before it is committed. It is installed as part of the developer dependencies. To run hooks on every commit, run
+
+```
+pre-commit install
+```
