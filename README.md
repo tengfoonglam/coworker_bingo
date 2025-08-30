@@ -33,7 +33,7 @@ source venv/bin/activate
 venv\Scripts\activate.bat
 
 # Install dependencies and coworker_bingo package
-pip install -e  .
+pip install -e .
 ```
 
 ### Preparing the Required Data
