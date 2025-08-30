@@ -1,4 +1,4 @@
-# Co-Worker Bingo Sheet Generator
+# Co-Worker Bingo Sheet Generator [![Build and Run Smoke Test with Example Data (All Supported Python Versions)](https://github.com/tengfoonglam/coworker_bingo/actions/workflows/master_workflow.yml/badge.svg)](https://github.com/tengfoonglam/coworker_bingo/actions/workflows/master_workflow.yml)
 
 **Co-Worker Bingo** is a great ice breaker game to know your colleagues - one grid at a time! Each participant is given a bingo sheet with interesting facts of their colleagues and they have to go around and find out who the facts belong to. The person who collects the highest number of completed rows/columns/diagonals within the allotted time wins!
 
