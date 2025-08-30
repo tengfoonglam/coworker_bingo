@@ -1,0 +1,27 @@
+name: Build and Run Smoke Test with Example Data (All supported Python versions)
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+    paths: ['libs/**', 'scripts/**', 'dockerfiles/**', '.github/workflows/**']
+  pull_request:
+    branches: [ "main" ]
+    paths: ['libs/**', 'scripts/**', 'dockerfiles/**', '.github/workflows/**']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Adapted from  https://stackoverflow.com/questions/75318609/matrix-strategy-over-entire-workflow-in-github-actions
+jobs:
+  version-matrix:
+    strategy:
+      # super important if you want to see all results, even if one fails
+      # fail-fast is true by default
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    uses: ./.github/workflows/common_workflow.yml
+    with:
+      python-version: ${{ matrix.python-version }}

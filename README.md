@@ -1,10 +1,10 @@
-# Co-Worker Bingo Sheet Generator
+# Co-Worker Bingo Sheet Generator [![Build and Run Smoke Test with Example Data (All Supported Python Versions)](https://github.com/tengfoonglam/coworker_bingo/actions/workflows/master_workflow.yml/badge.svg)](https://github.com/tengfoonglam/coworker_bingo/actions/workflows/master_workflow.yml)
 
 **Co-Worker Bingo** is a great ice breaker game to know your colleagues - one grid at a time! Each participant is given a bingo sheet with interesting facts of their colleagues and they have to go around and find out who the facts belong to. The person who collects the highest number of completed rows/columns/diagonals within the allotted time wins!
 
 Co-Worker Bingo can be played not only in a workplace setting but also among classmates, friends, and family to encourage team bonding and help everyone become familiar with one another.
 
-Creating these bingo sheets manually is a painstaking process especially for large groups. This repository contains the necessary Python code to quickly generate bingo sheets for groups with >10 people so the preparation process is as hassle-free as possible.
+Creating these bingo sheets manually is a painstaking process especially for large groups. Each sheet should contain at most one unique fact per participant and must not include any unique facts of the person using that sheet. This repository contains the necessary Python code to quickly generate valid bingo sheets for groups with >10 people so the preparation process is as hassle-free as possible.
 
 If you used this repository in one form or another please give it a **star** :star2:. Appreciate it!
 
@@ -33,7 +33,7 @@ source venv/bin/activate
 venv\Scripts\activate.bat
 
 # Install dependencies and coworker_bingo package
-pip install -e  .
+pip install -e .
 ```
 
 ### Preparing the Required Data
@@ -97,7 +97,7 @@ pre-commit install
 
 #### Smoke Test
 
-A simple smoke test to test bingo sheet generation is working is included. To run it, just call
+There is a simple smoke test to check that the bingo sheet generation using the example input files is working. To run it, just call
 
 ```
 pytest
