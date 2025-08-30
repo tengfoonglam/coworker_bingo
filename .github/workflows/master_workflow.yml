@@ -24,4 +24,4 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
     uses: ./.github/workflows/common_workflow.yml
     with:
-      version: ${{ python-version }}
+      version: ${{ matrix.python-version }}
