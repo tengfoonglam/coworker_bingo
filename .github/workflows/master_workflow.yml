@@ -1,4 +1,4 @@
-name: Smoke Test with Example Data (All supported Python versions)
+name: Build and Run Smoke Test with Example Data (All supported Python versions)
 
 # Controls when the workflow will run
 on:
