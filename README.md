@@ -97,7 +97,7 @@ pre-commit install
 
 #### Smoke Test
 
-A simple smoke test to test bingo sheet generation is working is included. To run it, just call
+There is a simple smoke test to check that the bingo sheet generation using the example input files is working. To run it, just call
 
 ```
 pytest
