@@ -42,10 +42,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+
+      - name: Set up Python ${{ inputs.python-version  }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version  }}
+
+      - name: Download cached venv
+        uses: actions/download-artifact@v4
         with:
           name: venv-${{ inputs.python-version  }}
           path: venv
+
       - name: Run pre-commit hooks
         run: |
           echo "Running pre-commit hooks"
@@ -57,10 +65,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+
+      - name: Set up Python ${{ inputs.python-version  }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version  }}
+
+      - name: Download cached venv
+        uses: actions/download-artifact@v4
         with:
           name: venv-${{ inputs.python-version  }}
           path: venv
+
       - name: Run Smoke Test
         run: |
           echo "Smoke test..."
