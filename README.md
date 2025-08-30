@@ -4,7 +4,7 @@
 
 Co-Worker Bingo can be played not only in a workplace setting but also among classmates, friends, and family to encourage team bonding and help everyone become familiar with one another.
 
-Creating these bingo sheets manually is a painstaking process especially for large groups. This repository contains the necessary Python code to quickly generate bingo sheets for groups with >10 people so the preparation process is as hassle-free as possible.
+Creating these bingo sheets manually is a painstaking process especially for large groups. Each sheet should contain at most one unique fact per participant and must not include any unique facts of the person using that sheet. This repository contains the necessary Python code to quickly generate valid bingo sheets for groups with >10 people so the preparation process is as hassle-free as possible.
 
 If you used this repository in one form or another please give it a **star** :star2:. Appreciate it!
 
