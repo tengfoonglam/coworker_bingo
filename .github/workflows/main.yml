@@ -44,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: venv
-          path: .venv
+          path: venv
 
   precommit:
     needs: build
@@ -54,7 +54,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: venv
-          path: .venv
+          path: venv
       - name: Run pre-commit hooks
         run: |
           echo "Running pre-commit hooks"
@@ -69,7 +69,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: venv
-          path: .venv
+          path: venv
       - name: Run Smoke Test
         run: |
           echo "Smoke test..."
