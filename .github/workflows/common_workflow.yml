@@ -54,6 +54,9 @@ jobs:
           name: venv-${{ inputs.python-version  }}
           path: venv
 
+      - name: Set execute permissions for venv scripts
+        run: chmod +x venv/bin/activate venv/bin/python
+
       - name: Run pre-commit hooks
         run: |
           echo "Running pre-commit hooks"
@@ -77,8 +80,11 @@ jobs:
           name: venv-${{ inputs.python-version  }}
           path: venv
 
+      - name: Set execute permissions for venv scripts
+        run: chmod +x venv/bin/activate venv/bin/python
+
       - name: Run Smoke Test
         run: |
-          echo "Smoke test..."
+          echo "Run smoke test"
           source venv/bin/activate
           pytest
