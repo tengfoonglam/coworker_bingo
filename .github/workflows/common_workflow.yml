@@ -9,7 +9,7 @@ on:
         type: string
 
 jobs:
-  build_and_run_smoketest:
+  build_and_run_smoke_test:
 
     runs-on: ubuntu-latest
     steps:
